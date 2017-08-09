@@ -32,7 +32,7 @@ export default class VapeItem extends Component {
       	/>
 
       	<span className="text">
-          <strong>{this.props.vapeItem.username}</strong>: {this.props.vapeItem.text}
+        	{this.props.vapeItem.text}
         </span>
       </li>
     );

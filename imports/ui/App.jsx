@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
  
 import { VapeItems } from '../api/vapeItems.js';
 
 import VapeItem from './VapeItem.jsx';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
  
 // App component - represents the whole app
 class App extends Component {
@@ -27,8 +25,6 @@ class App extends Component {
     VapeItems.insert({
       text,
       createdAt: new Date(), // current time
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
     });
  
     // Clear form
@@ -66,17 +62,13 @@ class App extends Component {
             />
             Hide Completed Tasks
           </label>
-
-          <AccountsUIWrapper />
-          { this.props.currentUser ?
-            <form className="new-vapeItem" onSubmit={this.handleSubmit.bind(this)} >
+          <form className="new-vapeItem" onSubmit={this.handleSubmit.bind(this)} >
               <input
                 type="text"
                 ref="textInput"
                 placeholder="Type to add new tasks"
               />
-            </form> : ''
-          }
+          </form>
         </header>
  
         <ul>
@@ -90,13 +82,11 @@ class App extends Component {
 App.propTypes = {
   vapeItems: PropTypes.array.isRequired,
   incompleteCount: PropTypes.number.isRequired,
-  currentUser: PropTypes.object,
 };
 
 export default createContainer(() => {
   return {
     vapeItems: VapeItems.find({}, { sort: { createdAt: -1 } }).fetch(),
     incompleteCount: VapeItems.find({ checked: { $ne: true } }).count(),
-    currentUser: Meteor.user(),
   };
 }, App);
