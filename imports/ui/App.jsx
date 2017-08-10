@@ -52,7 +52,7 @@ class App extends Component {
       <div className="container">
         <header>
           <h1>Todo List ({this.props.incompleteCount})</h1>
-
+          <Accounts.ui.LoginForm />
           <label className="hide-completed">
             <input
               type="checkbox"
